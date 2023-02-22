@@ -9,7 +9,7 @@ class DocumentInfos:
     seminary_title = u'Travail personnel OCI'
     tutor = u"Cédric Donner"
     release = "(Version intermédiaire)"
-    repository_url = "https://github.com/<username>/<reponame>"
+    repository_url = "https://github.com/LoisAudemars/travail-perso"
 
     @classmethod
     def date(cls):

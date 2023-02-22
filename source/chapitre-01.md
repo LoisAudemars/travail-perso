@@ -32,9 +32,9 @@ L’inconvénient principal de ces algorithmes par rapport aux algorithmes à cl
 ### Utilisations majeures
 1)   La confidentialité des messages reçus : l’individu souhaitant recevoir des messages génère un couple de clés privée/publique. La clé privée doit rester secrète, il ne va la transmettre à personne, alors que la clé publique est transmissible sans restriction. Quiconque veut lui envoyer un message confidentiel utilise la clé publique pour chiffrer celui-ci. Le message chiffré obtenu ne peut être déchiffré que par la clé privée. Par conséquent, il peut être communiqué publiquement, la confidentialité du message reste garantie. Le destinataire est le seul à pouvoir déchiffrer le message et reconstituer l’original puisqu’il est le seul à connaître la clé privée.
 
-```{figure} figures/Chiffrement_asymétrique.png
+```{figure} figures/Chiffrement_asymetrique.png
 ---
-width: 80%
+width: 70%
 ---
 Illustration du fonctionnement du chiffrement asymétrique
 ```
