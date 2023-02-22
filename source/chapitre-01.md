@@ -30,7 +30,7 @@ Quelques algorithmes de chiffrement asymétrique très utilisés :
 L’inconvénient principal de ces algorithmes par rapport aux algorithmes à clés secrètes (chiffrement symétrique) est leur grande lenteur. En effet, RSA est par exemple 1000 fois plus lent que DES.
 
 ### Utilisations majeures
-1)   La confidentialité des messages reçus : l’individu souhaitant recevoir des messages génère un couple de clés privée/publique. La clé privée doit rester secrète, il ne va la transmettre à personne, alors que la clé publique est transmissible sans restriction. Quiconque veut lui envoyer un message confidentiel utilise la clé publique pour chiffrer celui-ci. Le message chiffré obtenu ne peut être déchiffré que par la clé privée. Par conséquent, il peut être communiqué publiquement, la confidentialité du message reste garantie. Le destinataire est le seul à pouvoir déchiffrer le message et reconstituer l’original puisqu’il est le seul à connaître la clé privée.
+1.   La confidentialité des messages reçus : l’individu souhaitant recevoir des messages génère un couple de clés privée/publique. La clé privée doit rester secrète, il ne va la transmettre à personne, alors que la clé publique est transmissible sans restriction. Quiconque veut lui envoyer un message confidentiel utilise la clé publique pour chiffrer celui-ci. Le message chiffré obtenu ne peut être déchiffré que par la clé privée. Par conséquent, il peut être communiqué publiquement, la confidentialité du message reste garantie. Le destinataire est le seul à pouvoir déchiffrer le message et reconstituer l’original puisqu’il est le seul à connaître la clé privée.
 
 ```{figure} figures/Chiffrement_asymetrique.png
 ---
@@ -38,5 +38,16 @@ width: 70%
 ---
 Illustration du fonctionnement du chiffrement asymétrique
 ```
+
+Pour une meilleure compréhension du concept, voici un exemple comportant les individus Alice et Bob, qui sont les figures classiques utilisées en cryptologie :
+
+```{figure} figures/exemple_AliceBob.png
+---
+width: 75%
+---
+Exemple de transmission sécrurisée d'un message
+```
+
+Selon la figure ci-dessus, Alice souhaite recevoir des messages secrets de Bob. Elle transmet donc sa clé publique à tout le monde, dont à Bob. Bob utilise cette clé transmise par Alice pour chiffrer son message secret : « hello Alice ». Alice réceptionne le message chiffré puis le déchiffre grâce à sa clé privée. Si une tierce personne réceptionne le message, elle ne pourra pas le déchiffrer car elle n’a pas connaissance de la clé privée d’Alice.
 
 2.	L’authentification de l’expéditeur d’un message : l'expéditeur utilise sa clé privée pour chiffrer un message que n'importe qui peut déchiffrer avec la clé publique de l'expéditeur, ce qui garantit que le message a été chiffré par l'expéditeur, seul à posséder la clé privée. Ce mécanisme est utilisé par la **signature numérique** afin d’authentifier l’auteur d’un message.
