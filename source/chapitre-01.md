@@ -39,7 +39,7 @@ width: 70%
 Illustration du fonctionnement du chiffrement asymétrique
 ```
 
-Pour une meilleure compréhension du concept, voici un exemple comportant les individus Alice et Bob, qui sont les figures classiques utilisées en cryptologie :
+Pour une meilleure compréhension du concept, voici un exemple comportant les personnages Alice et Bob, qui sont les figures classiques utilisées en cryptologie :
 
 ```{figure} figures/exemple_AliceBob.png
 ---
@@ -51,3 +51,5 @@ Exemple de transmission sécrurisée d'un message
 Selon la figure ci-dessus, Alice souhaite recevoir des messages secrets de Bob. Elle transmet donc sa clé publique à tout le monde, dont à Bob. Bob utilise cette clé transmise par Alice pour chiffrer son message secret : « hello Alice ». Alice réceptionne le message chiffré puis le déchiffre grâce à sa clé privée. Si une tierce personne réceptionne le message, elle ne pourra pas le déchiffrer car elle n’a pas connaissance de la clé privée d’Alice.
 
 2.	L’authentification de l’expéditeur d’un message : l'expéditeur utilise sa clé privée pour chiffrer un message que n'importe qui peut déchiffrer avec la clé publique de l'expéditeur, ce qui garantit que le message a été chiffré par l'expéditeur, seul à posséder la clé privée. Ce mécanisme est utilisé par la **signature numérique** afin d’authentifier l’auteur d’un message.
+
+### Nature des clés
