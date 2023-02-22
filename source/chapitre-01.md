@@ -7,4 +7,12 @@ Ce sont les tâches à accomplir qui déterminent l’utilisation d’un systèm
 ## Crypotographie symétrique
 Comme dit plus haut, le chiffrement symétrique se fonde sur une même clé pour chiffrer et déchiffrer le message. L'un des problèmes de cette technique est que la clé, qui doit rester totalement confidentielle, doit être transmise au correspondant de façon sûre. La mise en œuvre peut s'avérer difficile, surtout avec un grand nombre de correspondants car il faut autant de clés que de correspondants.
 
-### Titre 2
+Quelques algorithmes de chiffrement symétrique très utilisés : 
+
+- Chiffre de Vernam (le seul offrant une sécurité théorique absolue, à condition que la clé ait au moins la même longueur que le message à chiffrer, qu'elle ne soit utilisée qu'une seule fois et qu'elle soit totalement aléatoire)
+
+- DES
+
+- AES
+
+## Cryptographie asymétrique
