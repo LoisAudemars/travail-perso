@@ -53,3 +53,7 @@ Selon la figure ci-dessus, Alice souhaite recevoir des messages secrets de Bob. 
 2.	L’authentification de l’expéditeur d’un message : l'expéditeur utilise sa clé privée pour chiffrer un message que n'importe qui peut déchiffrer avec la clé publique de l'expéditeur, ce qui garantit que le message a été chiffré par l'expéditeur, seul à posséder la clé privée. Ce mécanisme est utilisé par la **signature numérique** afin d’authentifier l’auteur d’un message.
 
 ### Nature des clés
+La cryptographie asymétrique se fonde sur l’existence de fonctions à sens unique et à trappe secrète. Une fonction à sens unique est une fonction qui peut être calculée assez facilement, mais qui est difficile à inversé, c’est-à-dire qu’il est difficile de retrouver l’antécédent d’une image. Ce type de fonctions est également utilisé dans les fonctions de hachage.
+Par l’existence d’une trappe secrète, la personne qui a conçu la fonction à sens unique peut retrouver l’antécédent d’une image aisément grâce à un élément d’information qu’elle possède. La clé publique fait alors référence à la fonction à sens unique alors que la clé privée désigne la trappe secrète.
+
+Développer plus les fonctions à sens unique ?
