@@ -7,7 +7,7 @@ Ce sont les tâches à accomplir qui déterminent l’utilisation d’un systèm
 ## Chiffrement symétrique
 Comme dit plus haut, le chiffrement symétrique se fonde sur une même clé pour chiffrer et déchiffrer le message (Fig. 3). L'un des problèmes de cette technique est que la clé, qui doit rester totalement confidentielle, doit être transmise au correspondant de façon sûre. La mise en œuvre peut s'avérer difficile, surtout avec un grand nombre de correspondants car il faut autant de clés que de correspondants.
 
-```{figure} figures/chiffrement_symetrique.png
+```{figure} figures/Chiffrement_symetrique.png
 ---
 width: 80%
 ---
