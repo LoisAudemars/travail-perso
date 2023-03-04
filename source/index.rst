@@ -14,6 +14,7 @@ Chiffrement RSA
     introduction.rst
     chapitre-01.md
     chapitre-02.md
+    chapitre-03.md
     conclusion.rst
     references.rst
 
