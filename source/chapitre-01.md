@@ -1,12 +1,36 @@
-# Introduction au chiffrement
-## Définition
-Le chiffrement est un procédé grâce auquel on peut rendre la compréhension d'un document impossible à toute personne qui n'a pas la clé de (dé)chiffrement. Le chiffrement est de ce fait un procédé de la cryptographie, une discipline s’attachant à protéger des messages à l’aide d’une clé. Celle-ci peut être un code ou un mot de passe, elle est le paramètre décisif du chiffrement. De nos jours, elle est générée automatiquement dans les processus informatiques afin d'éliminer le facteur humain et la menace d'utiliser un mot de passe qui n'est pas sûr.
-Un système de chiffrement peut être symétrique ou asymétrique. Il est dit symétrique lorsqu’il utilise la même clé pour chiffrer et déchiffrer, asymétrique lorsqu’il utilise deux clés distinctes.
-Ce sont les tâches à accomplir qui déterminent l’utilisation d’un système symétrique ou asymétrique. La cryptographie asymétrique présente deux intérêts majeurs : elle permet la signature électronique et supprime le problème de transmission de la clé. Cependant, elle a le désavantage d’avoir des temps de calcul nettement plus long que la cryptographie symétrique. 
+# Introduction à la cryptographie 
+## La cryptologie
+Étymologiquement, la cryptologie correspond à la science du secret. Elle se compose de deux disciplines : la cryptanalyse et la cryptographie. La cryptographie a pour rôle de coder des messages alors que la cryptanalyse s’occupe de les décoder (Fig. 1). Nous allons laisser de côté la cryptanalyse pour nous intéresser à la cryptographie.
+
+```{figure} figures/cryptologie.png
+---
+width: 60%
+---
+Composition de la cryptologie
+```
+
+## La cryptographie
+Comme mentionné plus haut, la cryptographie est une discipline de la cryptologie. Elle a pour objectif la protection des messages. L’existence de cette discipline remonte à l’Antiquité, bien avant la naissance de l’informatique.
+
+### Usages de la cryptographie
+L’objectif de la cryptographie est la protection des messages. De ce fait, elle doit assurer l’intégrité, l’authenticité et la confidentialité d’un message (Fig. 2). L’intégrité correspond à garantir qu’aucune modification n’a été faite. Ce sont principalement les fonctions de hachage qui remplissent ce rôle. Concernant l’authenticité, il s’agit d’établir la certitude de l’origine du message (Qui est l’émetteur ?). La méthode principale utilisée pour garantir l’authenticité est la signature numérique. Pour finir, le dernier usage de la cryptographie se rapporte à la confidentialité, c’est-à-dire à éviter la lecture des messages par des personnes non désirées. C’est le chiffrement qui est principalement utilisé pour garantir cet usage.
+
+```{figure} figures/usages_cryptographie.png
+---
+width: 80%
+---
+Usages des la cryptographie
+```
+
+# Le chiffrement
+Le chiffrement est une sous-discipline de la cryptographie qui fait cette fois appel à une clé. C’est un procédé grâce auquel on peut rendre la compréhension d'un document impossible à toute personne qui n'a pas la clé de (dé)chiffrement. Celle-ci peut être un code ou un mot de passe, elle est le paramètre décisif du chiffrement. De nos jours, elle est générée automatiquement dans les processus informatiques afin d'éliminer le facteur humain et la menace d'utiliser un mot de passe qui n'est pas sûr.
+Les systèmes de chiffrement sont principalement symétriques ou asymétriques. Un système est dit symétrique lorsqu’il utilise la même clé pour chiffrer et déchiffrer, asymétrique lorsqu’il utilise deux clés distinctes.
+Ce sont les tâches à accomplir qui déterminent l’utilisation d’un système symétrique ou asymétrique. La cryptographie asymétrique présente deux intérêts majeurs : elle permet la signature numérique et supprime le problème de transmission de la clé. Cependant, elle a le désavantage d’avoir des temps de calcul nettement plus long que la cryptographie symétrique. 
+ 
 
 
-## Crypotographie symétrique
-Comme dit plus haut, le chiffrement symétrique se fonde sur une même clé pour chiffrer et déchiffrer le message. L'un des problèmes de cette technique est que la clé, qui doit rester totalement confidentielle, doit être transmise au correspondant de façon sûre. La mise en œuvre peut s'avérer difficile, surtout avec un grand nombre de correspondants car il faut autant de clés que de correspondants.
+## Chiffrement symétrique
+Comme dit plus haut, le chiffrement symétrique se fonde sur une même clé pour chiffrer et déchiffrer le message (Fig. 3). L'un des problèmes de cette technique est que la clé, qui doit rester totalement confidentielle, doit être transmise au correspondant de façon sûre. La mise en œuvre peut s'avérer difficile, surtout avec un grand nombre de correspondants car il faut autant de clés que de correspondants.
 
 Quelques algorithmes de chiffrement symétrique très utilisés : 
 
