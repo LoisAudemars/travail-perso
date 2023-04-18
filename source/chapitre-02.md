@@ -61,6 +61,3 @@ Selon la figure ci-dessus, Alice souhaite recevoir des messages secrets de Bob. 
 ### Nature des clés
 La cryptographie asymétrique se fonde sur l’existence de fonctions à sens unique et à trappe secrète. Une fonction à sens unique est une fonction qui peut être calculée assez facilement, mais qui est difficile à inversé, c’est-à-dire qu’il est difficile de retrouver l’antécédent d’une image. Ce type de fonctions est également utilisé dans les fonctions de hachage.
 Par l’existence d’une trappe secrète, la personne qui a conçu la fonction à sens unique peut retrouver l’antécédent d’une image aisément grâce à un élément d’information qu’elle possède. La clé publique fait alors référence à la fonction à sens unique alors que la clé privée désigne la trappe secrète.
-
-Développer plus les fonctions à sens unique ?
-
