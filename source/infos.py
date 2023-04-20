@@ -1,6 +1,6 @@
 class DocumentInfos:
 
-    title = u'Le cryptosystème RSA'
+    title = u'Cryptographie et cryptosystème RSA'
     first_name = 'Loïs'
     last_name = 'Audemars'
     author = f'{first_name} {last_name}'
