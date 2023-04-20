@@ -61,13 +61,193 @@ Pour générer une paire de clés RSA, nous choisissons d'abord deux nombres pre
 A partir des clés générées, nous pouvons chiffrer des messages en calculant {math}`x^e mod n = y` et ensuite les déchiffrer avec {math}`y^d mod n = x`. Ci-dessous se trouve l’implémentation d’un algorithme RSA qui permet de crypter et décrypter des petits nombres.
 
 ```python
-from a import b
+# Python for RSA asymmetric cryptographic algorithm.
+# For demonstration, values are
+# relatively small compared to practical application
+import math
+ 
+ 
+def gcd(a, h):
+    temp = 0
+    while(1):
+        temp = a % h
+        if (temp == 0):
+            return h
+        a = h
+        h = temp
+ 
+ 
+p = 3
+q = 7
+n = p*q
+e = 2
+phi = (p-1)*(q-1)
+ 
+while (e < phi):
+ 
+    # e must be co-prime to phi and
+    # smaller than phi.
+    if(gcd(e, phi) == 1):
+        break
+    else:
+        e = e+1
+ 
+# Private key (d stands for decrypt)
+# choosing d such that it satisfies
+# d*e = 1 + k * totient
+ 
+k = 2
+d = (1 + (k*phi))/e
+ 
+# Message to be encrypted
+msg = 12.0
+ 
+print("Message data = ", msg)
+ 
+# Encryption c = (msg ^ e) % n
+c = pow(msg, e)
+c = math.fmod(c, n)
+print("Encrypted data = ", c)
+ 
+# Decryption m = (c ^ d) % n
+m = pow(c, d)
+m = math.fmod(m, n)
+print("Original Message Sent = ", m)
 c = "string"
 ```
 
 Cette première implémentation est relativement simple à comprendre. Les nombres {math}`p` et {math}`q` sont donnés de base. Nous pouvons donc calculer facilement phi et {math}`n`. Concernant l’exposant {math}`e`, il doit être co-premier à phi ; nous voulons donc que le plus grand diviseur commun de {math}`e` et phi soit {math}`1`. Passons maintenant à une implémentation plus complexe qui génère elle-même les clés et permet de crypter et décrypter des messages contenant des lettres. On a pour cela recours aux valeurs ASCII. 
 
-
+```python
+import random
+import math
+ 
+# A set will be the collection of prime numbers,
+# where we can select random primes p and q
+prime = set()
+ 
+public_key = None
+private_key = None
+n = None
+ 
+# We will run the function only once to fill the set of
+# prime numbers
+def primefiller():
+    # Method used to fill the primes set is Sieve of
+    # Eratosthenes (a method to collect prime numbers)
+    seive = [True] * 250
+    seive[0] = False
+    seive[1] = False
+    for i in range(2, 250):
+        for j in range(i * 2, 250, i):
+            seive[j] = False
+ 
+    # Filling the prime numbers
+    for i in range(len(seive)):
+        if seive[i]:
+            prime.add(i)
+ 
+ 
+# Picking a random prime number and erasing that prime
+# number from list because p!=q
+def pickrandomprime():
+    global prime
+    k = random.randint(0, len(prime) - 1)
+    it = iter(prime)
+    for _ in range(k):
+        next(it)
+ 
+    ret = next(it)
+    prime.remove(ret)
+    return ret
+ 
+ 
+def setkeys():
+    global public_key, private_key, n
+    prime1 = pickrandomprime()  # First prime number
+    prime2 = pickrandomprime()  # Second prime number
+ 
+    n = prime1 * prime2
+    fi = (prime1 - 1) * (prime2 - 1)
+ 
+    e = 2
+    while True:
+        if math.gcd(e, fi) == 1:
+            break
+        e += 1
+ 
+    # d = (k*Φ(n) + 1) / e for some integer k
+    public_key = e
+ 
+    d = 2
+    while True:
+        if (d * e) % fi == 1:
+            break
+        d += 1
+ 
+    private_key = d
+ 
+ 
+# To encrypt the given number
+def encrypt(message):
+    global public_key, n
+    e = public_key
+    encrypted_text = 1
+    while e > 0:
+        encrypted_text *= message
+        encrypted_text %= n
+        e -= 1
+    return encrypted_text
+ 
+ 
+# To decrypt the given number
+def decrypt(encrypted_text):
+    global private_key, n
+    d = private_key
+    decrypted = 1
+    while d > 0:
+        decrypted *= encrypted_text
+        decrypted %= n
+        d -= 1
+    return decrypted
+ 
+ 
+# First converting each character to its ASCII value and
+# then encoding it then decoding the number to get the
+# ASCII and converting it to character
+def encoder(message):
+    encoded = []
+    # Calling the encrypting function in encoding function
+    for letter in message:
+        encoded.append(encrypt(ord(letter)))
+    return encoded
+ 
+ 
+def decoder(encoded):
+    s = ''
+    # Calling the decrypting function decoding function
+    for num in encoded:
+        s += chr(decrypt(num))
+    return s
+ 
+ 
+if __name__ == '__main__':
+    primefiller()
+    setkeys()
+    message = "Hello world"
+    # Uncomment below for manual input
+    # message = input("Enter the message\n")
+    # Calling the encoding function
+    coded = encoder(message)
+ 
+    print("Initial message:")
+    print(message)
+    print("\n\nThe encoded message(encrypted by public key)\n")
+    print(''.join(str(p) for p in coded))
+    print("\n\nThe decoded message(decrypted by private key)\n")
+    print(''.join(str(p) for p in decoder(coded)))
+c = "string"
+```
 
 ### Sécurité
 Pour trouver {math}`x` à partir de {math}`y`, nous devons calculer {math}`y^d mod n = x`. Mais est-il difficile de trouver {math}`x` sans la trappe {math}`d` ? Un attaquant capable de factoriser de grands nombres peut casser le RSA en récupérant {math}`p` et {math}`q`, puis {math}`φ(n)`, afin de calculer {math}`d` à partir de {math}`e`. Mais ce n'est pas le seul risque. Un autre risque pour RSA réside dans la capacité d'un attaquant à calculer {math}`x` à partir de {math}`x^e mod n`, sans nécessairement factoriser {math}`n`. Ces deux risques semblent étroitement liés, bien que nous ne sachions pas avec certitude s'ils sont équivalents. 
