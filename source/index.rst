@@ -17,7 +17,7 @@ Le cryptosystème RSA
     chapitre-03.md
     chapitre-04.md
     chapitre-05.md
-    conclusion.rst
+    conclusion.md
     references.rst
 
 ..
