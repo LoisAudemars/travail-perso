@@ -78,4 +78,38 @@ Les figures suivantes illustrent de manière plus complète différentes façons
 - D = decryption (déchiffrement)
 - S = secret value (valeur secrète)
 
+```{figure} figures/hash1.png
+---
+width: 90%
+---
+Exemple d'utilisation d'une fonction de hachage. 
+```
 
+Selon la figure ci-dessus, le message plus le code de hachage concaténé est chiffré à l'aide d'un chiffrement symétrique. Comme seuls A et B partagent la clé secrète, le message doit provenir de A et n'a pas été modifié. Le code de hachage fournit la structure ou la redondance nécessaire à l'authentification. Le chiffrement étant appliqué à l'ensemble du message et du code de hachage, la confidentialité est également assurée.
+
+```{figure} figures/hash2.png
+---
+width: 90%
+---
+Exemple d'utilisation d'une fonction de hachage. 
+```
+
+Seule la valeur de hachage est chiffrée, à l'aide d'un chiffrement symétrique. Cela réduit la charge de traitement pour les applications qui ne nécessitent pas de confidentialité.
+
+```{figure} figures/hash3.png
+---
+width: 90%
+---
+Exemple d'utilisation d'une fonction de hachage. 
+```
+
+Il est possible d'utiliser une valeur de hachage sans chiffrement pour l'authentification des messages. La technique suppose que les deux parties communicantes partagent une valeur secrète commune S. A calcule la valeur de hachage sur la concaténation de M et S et ajoute la valeur de hachage résultante à M. Comme B possède S, il peut recalculer la valeur de hachage pour la vérifier. Comme la valeur secrète elle-même n'est pas envoyée, un adversaire ne peut pas modifier un message intercepté et ne peut pas générer un faux message.
+
+```{figure} figures/hash4.png
+---
+width: 90%
+---
+Exemple d'utilisation d'une fonction de hachage. 
+```
+
+La confidentialité peut être ajoutée à l'approche de la méthode (c) en chiffrant l'ensemble du message plus le code de hachage.
