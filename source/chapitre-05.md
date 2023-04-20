@@ -53,3 +53,9 @@ Le nombre {math}`d` est la trappe qui nous permet de décrypter. Par conséquent
 Évidemment, {math}`d` n'est pas n'importe quel nombre ; c'est le nombre tel que {math}`e` multiplié par {math}`d` est équivalent à {math}`1`, et donc tel que {math}`x^{ed} mod n = x` pour tout {math}`x`. 
 
 ## Génération de clés RSA et implémentation
+
+La génération de clés est le processus par lequel une paire de clés RSA est créée, à savoir une clé publique (module {math}`n` et exposant public {math}`e`) et sa clé privée (exposant secret {math}`d`). Les nombres {math}`p` et {math}`q` (tels que {math}`n = pq`) et l'ordre {math}`φ(n)` doivent également être secrets, et sont donc souvent considérés comme faisant partie de la clé privée.
+
+Pour générer une paire de clés RSA, nous choisissons d'abord deux nombres premiers aléatoires, {math}`p` et {math}`q`. Supposons que {math}`p = 53` et {math}`q = 59`. La première partie de la clé publique est {math}`n = pq = 3127`. Nous pouvons désormais calculer {math}`φ(n)`, tel que {math}`φ(n) = (p - 1)(q - 1)`. Dans notre exemple, {math}`φ(n) = 3016`. Nous avons également besoin d’un exposant public {math}`e`, prenons {math}`3`. A noter que l’exposant {math}`e` doit respecter 3 conditions : être un nombre premier, être inférieur à {math}`φ(n)` et ne pas être un facteur de {math}`φ(n)`. Nous avons donc notre clé publique, composée de {math}`n` et {math}`e`. Concernant la clé privée ({math}`d`), nous devons trouver un nombre tel que {math}`(d^e) mod φ(n) = 1`. Cela revient à dire que {math}`d = (k × Φ(n) + 1) / e` pour un certain nombre entier {math}`k`. Pour {math}`k = 2`, {math}`d = 2011`, correspondant à notre clé privée.
+
+A partir des clés générées, nous pouvons chiffrer des messages en calculant xe mod n = y et ensuite les déchiffrer avec yd mod n = x. Ci-dessous se trouve l’implémentation d’un algorithme RSA qui permet de crypter et décrypter des petits nombres.
