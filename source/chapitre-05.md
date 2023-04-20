@@ -58,4 +58,61 @@ La génération de clés est le processus par lequel une paire de clés RSA est 
 
 Pour générer une paire de clés RSA, nous choisissons d'abord deux nombres premiers aléatoires, {math}`p` et {math}`q`. Supposons que {math}`p = 53` et {math}`q = 59`. La première partie de la clé publique est {math}`n = pq = 3127`. Nous pouvons désormais calculer {math}`φ(n)`, tel que {math}`φ(n) = (p - 1)(q - 1)`. Dans notre exemple, {math}`φ(n) = 3016`. Nous avons également besoin d’un exposant public {math}`e`, prenons {math}`3`. A noter que l’exposant {math}`e` doit respecter 3 conditions : être un nombre premier, être inférieur à {math}`φ(n)` et ne pas être un facteur de {math}`φ(n)`. Nous avons donc notre clé publique, composée de {math}`n` et {math}`e`. Concernant la clé privée ({math}`d`), nous devons trouver un nombre tel que {math}`(d^e) mod φ(n) = 1`. Cela revient à dire que {math}`d = (k × Φ(n) + 1) / e` pour un certain nombre entier {math}`k`. Pour {math}`k = 2`, {math}`d = 2011`, correspondant à notre clé privée.
 
-A partir des clés générées, nous pouvons chiffrer des messages en calculant xe mod n = y et ensuite les déchiffrer avec yd mod n = x. Ci-dessous se trouve l’implémentation d’un algorithme RSA qui permet de crypter et décrypter des petits nombres.
+A partir des clés générées, nous pouvons chiffrer des messages en calculant {math}`x^e mod n = y` et ensuite les déchiffrer avec {math}`y^d mod n = x`. Ci-dessous se trouve l’implémentation d’un algorithme RSA qui permet de crypter et décrypter des petits nombres.
+
+```python
+from a import b
+c = "string"
+```
+
+Cette première implémentation est relativement simple à comprendre. Les nombres {math}`p` et {math}`q` sont donnés de base. Nous pouvons donc calculer facilement phi et {math}`n`. Concernant l’exposant {math}`e`, il doit être co-premier à phi ; nous voulons donc que le plus grand diviseur commun de {math}`e` et phi soit {math}`1`. Passons maintenant à une implémentation plus complexe qui génère elle-même les clés et permet de crypter et décrypter des messages contenant des lettres. On a pour cela recours aux valeurs ASCII. 
+
+
+
+### Sécurité
+Pour trouver {math}`x` à partir de {math}`y`, nous devons calculer {math}`y^d mod n = x`. Mais est-il difficile de trouver {math}`x` sans la trappe {math}`d` ? Un attaquant capable de factoriser de grands nombres peut casser le RSA en récupérant {math}`p` et {math}`q`, puis {math}`φ(n)`, afin de calculer {math}`d` à partir de {math}`e`. Mais ce n'est pas le seul risque. Un autre risque pour RSA réside dans la capacité d'un attaquant à calculer {math}`x` à partir de {math}`x^e mod n`, sans nécessairement factoriser {math}`n`. Ces deux risques semblent étroitement liés, bien que nous ne sachions pas avec certitude s'ils sont équivalents. 
+
+En supposant que la factorisation soit effectivement difficile, le niveau de sécurité de RSA dépend de trois facteurs : la taille de {math}`n`, le choix de {math}`p` et {math}`q`, et la manière dont la permutation de la trappe est utilisée. Si {math}`n` est trop petit, il pourrait être factorisé en un temps réaliste, révélant ainsi la clé privée. Pour être sûr, {math}`n` devrait au moins avoir une longueur de {math}`2048` bits, mais de préférence une longueur de {math}`4096` bits. Les valeurs {math}`p` et {math}`q` doivent être des nombres premiers aléatoires non liés et de taille similaire. S'ils sont trop petits ou trop proches l'un de l'autre, il devient plus facile de déterminer leur valeur à partir de {math}`n`. Enfin, la permutation de trappe RSA ne doit pas être utilisée directement pour le chiffrement ou la signature.
+
+## Crypter avec RSA
+
+Généralement, RSA est utilisé en combinaison avec un système de cryptage symétrique, où RSA est utilisé pour crypter une clé symétrique qui est ensuite utilisée pour crypter un message avec un système de cryptage tel que l'Advanced Encryption Standard (AES). Mais le cryptage d'un message ou d'une clé symétrique avec RSA est plus compliqué que la simple conversion de la cible en un nombre {math}`x` et le calcul de {math}`x^e mod n`.
+
+Le chiffrement RSA est souvent utilisé pour communiquer une clé de chiffrement symétrique, qui permet alors de poursuivre l'échange de façon confidentielle : Bob envoie à Alice une clé de chiffrement symétrique qui peut ensuite être utilisée par Alice et Bob pour échanger des données.
+
+### Le problème du chiffrement RSA classique
+
+Le chiffrement RSA classique est l'expression utilisée pour décrire le schéma de chiffrement RSA simpliste dans lequel le texte en clair ne contient que le message que l'on souhaite chiffrer. Cependant, le cryptage RSA classique est déterministe : si on crypte deux fois le même texte en clair, on obtiendra deux fois le même texte crypté. C'est un premier problème, mais il y en a un autre plus important : étant donné deux cryptogrammes RSA classiques {math}`y_1 = x_1^e mod n` et {math}`y_2 = x_2^e mod n`, vous pouvez dériver le texte chiffré de {math}`x_1 × x_2` en multipliant ces deux textes chiffrés ensemble, comme ceci :
+
+$$
+y_1 × y_2 mod n= x_1^e × x_2^e mod n=(x_1 × x_2)^e mod n
+$$
+
+Le résultat est {math}`(x_1 × x_2)^e mod n`, le texte chiffré du message {math}`x_1 × x_2 mod n`. Un attaquant pourrait donc créer un nouveau texte chiffré valide à partir de deux textes chiffrés RSA, ce qui lui permettrait de compromettre la sécurité de votre chiffrement en déduisant des informations sur le message d'origine. Nous disons que cette faiblesse rend le cryptage RSA des manuels malléable. (Bien entendu, si vous connaissez {math}`x_1` et {math}`x_2`, vous pouvez également calculer {math}`(x_1 × x_2)^e mod n`, mais si vous ne connaissez que {math}`y_1` et {math}`y_2`, vous ne devriez pas être en mesure de multiplier les textes chiffrés et d'obtenir un texte chiffré à partir des textes clairs multipliés).
+
+### Briser la malléabilité du chiffrement RSA
+
+Il y a bien sûr une solution à la malléabilité de RSA. Pour que les textes chiffrés RSA ne puissent pas être mis en parallèle, le texte chiffré doit être constitué des données du message et de données supplémentaires appelées "padding" (remplissage). Pour chiffrer avec RSA de cette manière, on utilise le système OAEP (Optimal Asymmetric Encryption Padding). On appelle cette façon de chiffrer RSA-OAEP. Ce système consiste à créer une chaîne de bits aussi grande que le module en remplissant le message de données supplémentaires et d'éléments aléatoires avant d'appliquer la fonction RSA.
+
+## Signer avec RSA
+
+Pour rappel, les signatures numériques permettent de prouver que le détenteur de la clé privée liée à une signature numérique particulière a signé un message et que la signature est authentique. Étant donné que personne d'autre que le détenteur de la clé privée ne connaît l'exposant privé {math}`d`, personne ne peut calculer une signature {math}`y = x^d mod n` à partir d'une valeur {math}`x`, mais tout le monde peut vérifier {math}`y^e mod n = x` étant donné l'exposant public {math}`e`. Cette signature vérifiée peut être utilisée devant un tribunal pour démontrer que le détenteur de la clé privée a bien signé un message donné - une propriété d'indéniabilité appelée non-répudiation.
+
+Il est tentant de considérer les signatures RSA comme l'inverse du chiffrement, mais ce n'est pas le cas. Signer avec RSA n'est pas la même chose que crypter avec la clé privée. Le chiffrement assure la confidentialité, tandis qu'une signature numérique est utilisée pour empêcher les falsifications. L'exemple le plus frappant de cette différence est qu'un système de signature peut laisser filtrer des informations sur le message signé, parce que le message n'est pas secret. Par exemple, un système qui révèle des parties du message pourrait être un système de signature sécurisé, mais pas un système de cryptage sécurisé.
+
+En raison de la surcharge de traitement nécessaire, le chiffrement à clé publique ne peut traiter que des messages courts, qui sont généralement des clés secrètes plutôt que des messages réels. Un système de signature, en revanche, peut traiter des messages de taille arbitraire en utilisant leurs valeurs de hachage Hash(M) comme intermédiaire, et il peut être déterministe tout en étant sûr. Comme RSA-OAEP, les systèmes de signature basés sur RSA peuvent utiliser un système de remplissage.
+
+### Attaques sur les signatures RSA classiques
+
+Pour rappel, ce que nous appelons une signature RSA classique est la méthode qui signe un message, {math}`x`, en calculant directement {math}`y = x^d mod n`, où {math}`x` peut être n'importe quel nombre entre {math}`0` et {math}`n - 1`. Comme le chiffrement classique, la signature RSA classique est simple à spécifier et à mettre en œuvre, mais elle n'est pas sûre face à plusieurs attaques. L'une d'entre elles consiste en une falsification triviale : en remarquant que {math}`0^d mod n=0`, {math}`1^d mod n=1` et {math}`(n-1)^d mod n = n-1`, quelle que soit la valeur de la clé privée {math}`d`, un attaquant peut falsifier des signatures de {math}`0`, {math}`1` ou {math}`n-1` sans connaître {math}`d`.
+
+L'attaque par aveuglement est plus inquiétante. Par exemple, supposons que vous souhaitiez obtenir la signature d'un tiers sur un message incriminant, {math}`M`, dont vous savez qu'il ne le signerait jamais en connaissance de cause. Pour lancer cette attaque, vous pourriez d'abord trouver une valeur, {math}`R`, telle que {math}`R^eM` mod n est un message que votre victime signerait en toute connaissance de cause. Ensuite, vous la convaincrez de signer ce message et de vous montrer sa signature, qui est égale à {math}`S = (R^eM)^d mod n`, ou le message élevé à la puissance {math}`d`. Maintenant, étant donné cette signature, vous pouvez dériver la signature de {math}`M`, à savoir {math}`M^d`, à l'aide de quelques calculs simples.
+
+Voici comment cela fonctionne : comme S peut être écrit sous la forme {math}`(R^eM)^d = R^{ed}M^d`, et comme {math}`R^{ed} = R ` (par définition), nous avons {math}`S = (R^eM)^d = RM^d`. Pour obtenir {math}`M^d`, il suffit de diviser {math}`S` par {math}`R`, comme suit, pour obtenir la signature :
+
+$$
+S/R = RM^d/R = M^d
+$$
+
+Cette attaque est puissante.
+
