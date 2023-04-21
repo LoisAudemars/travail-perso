@@ -27,7 +27,7 @@ Comme l’algorithme de signature crée la signature à partir du message et de 
 
 L’ensemble du processus est expliqué par l’illustration ci-dessous et les points qui suivent :
 
-```{figure} figures/digital_signature_process.png
+```{figure} figures/digitalsignatureprocess.png
 ---
 width: 80%
 ---
