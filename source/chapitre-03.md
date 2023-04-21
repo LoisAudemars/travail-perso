@@ -111,4 +111,4 @@ width: 90%
 Exemple d'utilisation d'une fonction de hachage. 
 ```
 
-A la méthode précédente, le message n'était pas confidentiel. Afin d'ajouter la confidentialité, nous pouvons simplement chiffrer l'ensemble du message avec le code de hachage, comme l'illustre la figure ci-dessus.
+A l'exemple précédent, le message n'était pas confidentiel. Afin d'ajouter la confidentialité, nous pouvons simplement chiffrer l'ensemble du message avec le code de hachage, comme l'illustre la figure ci-dessus.
