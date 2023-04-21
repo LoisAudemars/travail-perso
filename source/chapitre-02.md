@@ -5,7 +5,7 @@ Les systèmes de chiffrement sont principalement symétriques ou asymétriques. 
 Ce sont les tâches à accomplir qui déterminent l’utilisation d’un système symétrique ou asymétrique. La cryptographie asymétrique présente deux intérêts majeurs : elle permet la signature numérique et supprime le problème de transmission de la clé. Cependant, elle a le désavantage d’avoir des temps de calcul nettement plus long que la cryptographie symétrique. 
  
 ## Chiffrement symétrique
-Comme dit plus haut, le chiffrement symétrique se fonde sur une même clé pour chiffrer et déchiffrer le message (Fig. 3). L'un des problèmes de cette technique est que la clé, qui doit rester totalement confidentielle, doit être transmise au correspondant de façon sûre. La mise en œuvre peut s'avérer difficile, surtout avec un grand nombre de correspondants car il faut autant de clés que de correspondants.
+Comme mentionné plus haut, la cryptographie symétrique se fonde sur une même clé pour chiffrer et déchiffrer le message (Fig. 2). L'un des problèmes de cette technique est que la clé, qui doit rester totalement confidentielle, doit être transmise au correspondant de façon sûre. Cette opération peut s'avérer difficile, surtout avec un grand nombre de correspondants car il faut autant de clés que de correspondants.
 
 ```{figure} figures/Chiffrement_symetrique.png
 ---
@@ -14,7 +14,7 @@ width: 80%
 Schéma du chiffrement symétrique : la même clé est utilisée pour le chiffrement et le déchiffrement.
 ```
 
-Quelques algorithmes de chiffrement symétrique très utilisés : 
+Voici quelques algorithmes de chiffrement symétrique très utilisés : 
 
 - Chiffre de Vernam (le seul offrant une sécurité théorique absolue, à condition que la clé ait au moins la même longueur que le message à chiffrer, qu'elle ne soit utilisée qu'une seule fois et qu'elle soit totalement aléatoire)
 
@@ -23,11 +23,11 @@ Quelques algorithmes de chiffrement symétrique très utilisés :
 - AES
 
 ## Chiffrement asymétrique
-Dans les années 1970, la cryptographie asymétrique a été mise au point pour résoudre le problème de l’échange de clés posé par la cryptographie symétrique. Elle se base sur le principe de deux clés : une clé publique permettant le chiffrement et une clé privée pour le déchiffrement (d’où le terme « asymétrique », deux clés différentes sont utilisées).
+Dans les années 1970, la cryptographie asymétrique a été mise au point pour résoudre le problème de l’échange de clés posé par la cryptographie symétrique. Ce type de cryptographie utilise deux clés : une clé publique permettant le chiffrement et une clé privée pour le déchiffrement (d’où le terme « asymétrique », deux clés différentes sont utilisées).
 
-Quelques algorithmes de chiffrement asymétrique très utilisés :
+Voici quelques algorithmes de chiffrement asymétrique très utilisés :
 
-- RSA
+- RSA (algorithme que nous étudierons par la suite)
 
 - DSA
 
@@ -36,7 +36,8 @@ Quelques algorithmes de chiffrement asymétrique très utilisés :
 L’inconvénient principal de ces algorithmes par rapport aux algorithmes à clés secrètes (chiffrement symétrique) est leur grande lenteur. En effet, RSA est par exemple 1000 fois plus lent que DES.
 
 ### Utilisations majeures
-On a premièrement la confidentialité des messages reçus : l’individu souhaitant recevoir des messages génère un couple de clés privée/publique. La clé privée doit rester secrète, il ne va la transmettre à personne, alors que la clé publique est transmissible sans restriction. Quiconque veut lui envoyer un message confidentiel utilise la clé publique pour chiffrer celui-ci. Le message chiffré obtenu ne peut être déchiffré que par la clé privée. Par conséquent, il peut être communiqué publiquement, la confidentialité du message reste garantie. Le destinataire est le seul à pouvoir déchiffrer le message et reconstituer l’original puisqu’il est le seul à connaître la clé privée.
+
+Nous avons premièrement la confidentialité des messages reçus : l’individu souhaitant recevoir des messages génère un couple de clés privée/publique. La clé privée doit rester secrète, il ne la transmet à personne, alors que la clé publique est transmissible sans restriction. Lorsque qu'un individu veut lui envoyer un message de manière confidentielle, il utilise la clé publique afin de chiffrer celui-ci (fig. 3). Le message chiffré obtenu ne peut être déchiffré que par la clé privée. Par conséquent, il peut être communiqué publiquement, la confidentialité du message reste garantie. Le destinataire est le seul à pouvoir déchiffrer le message et reconstituer l’original puisqu’il est le seul à connaître la clé privée.
 
 ```{figure} figures/Chiffrement_asymetrique.png
 ---
