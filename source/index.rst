@@ -13,9 +13,6 @@ Cryptographie et cryptosystème RSA
 
     introduction.md
     chapitre-01.md
-    chapitre-02.md
-    chapitre-03.md
-    chapitre-04.md
     chapitre-05.md
     conclusion.md
     references.rst
