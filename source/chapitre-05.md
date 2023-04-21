@@ -55,7 +55,9 @@ La génération de clés est le méchanisme par lequel une paire de clés RSA es
 
 Pour générer une paire de clés RSA, nous choisissons d'abord deux nombres premiers aléatoires, {math}`p` et {math}`q`. Supposons que {math}`p = 53` et {math}`q = 59`. La première partie de la clé publique est {math}`n = pq = 3127`. Nous pouvons désormais calculer {math}`φ(n)`, tel que {math}`φ(n) = (p - 1)(q - 1)`. Dans notre exemple, {math}`φ(n) = 3016`. Nous avons également besoin d’un exposant public {math}`e`, prenons {math}`3`. A noter que l’exposant {math}`e` doit respecter 3 conditions : être un nombre premier, être inférieur à {math}`φ(n)` et ne pas être un facteur de {math}`φ(n)`. Nous avons donc notre clé publique, composée de {math}`n` et {math}`e`. Concernant la clé privée ({math}`d`), nous devons trouver un nombre tel que {math}`(d^e) mod φ(n) = 1`. Cela revient à dire que {math}`d = (k × Φ(n) + 1) / e` pour un certain nombre entier {math}`k`. Pour {math}`k = 2`, {math}`d = 2011`, correspondant à notre clé privée.
 
-A partir des clés générées, nous pouvons chiffrer des messages en calculant {math}`x^e mod n = y` et ensuite les déchiffrer avec {math}`y^d mod n = x`. Ci-dessous se trouve l’implémentation :cite:p:`geeksforgeeks1` d’un algorithme RSA qui permet de crypter et décrypter des petits nombres.
+A partir des clés générées, nous pouvons chiffrer des messages en calculant {math}`x^e mod n = y` et ensuite les déchiffrer avec {math}`y^d mod n = x`. Ci-dessous se trouve l’implémentation [^1] d’un algorithme RSA qui permet de crypter et décrypter des petits nombres.
+
+[^1]: GeeksForGeeks : <https://www.geeksforgeeks.org/rsa-algorithm-cryptography/?ref=lbp>.
 
 ```python
 # Python for RSA asymmetric cryptographic algorithm.
@@ -113,7 +115,9 @@ print("Original Message Sent = ", m)
 c = "string"
 ```
 
-Cette première implémentation est relativement simple à comprendre. Les nombres {math}`p` et {math}`q` sont donnés de base. Nous pouvons donc calculer facilement phi et {math}`n`. Concernant l’exposant {math}`e`, il doit être co-premier à phi ; nous voulons donc que le plus grand diviseur commun de {math}`e` et phi soit {math}`1`. Passons maintenant à une implémentation :cite:p:`geeksforgeeks1` plus complexe qui génère elle-même les clés et permet de crypter et décrypter des messages contenant des lettres. On a pour cela recours aux valeurs ASCII. 
+Cette première implémentation est relativement simple à comprendre. Les nombres {math}`p` et {math}`q` sont donnés de base. Nous pouvons donc calculer facilement phi et {math}`n`. Concernant l’exposant {math}`e`, il doit être co-premier à phi ; nous voulons donc que le plus grand diviseur commun de {math}`e` et phi soit {math}`1`. Passons maintenant à une implémentation [^2] plus complexe qui génère elle-même les clés et permet de crypter et décrypter des messages contenant des lettres. On a pour cela recours aux valeurs ASCII. 
+
+[^2]: GeeksForGeeks : <https://www.geeksforgeeks.org/rsa-algorithm-cryptography/?ref=lbp>.
 
 ```python
 import random

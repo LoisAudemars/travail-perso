@@ -121,7 +121,10 @@ width: 70%
 ---
 Illustration de la résistance aux collisions. 
 ```
+
+```{warning}
 Au premier abord, on pourrait croire que la deuxième et troisième propriété ont la même signification, ce qui n'est pas le cas. Dès lors, il est important de ne pas les confondre et de comprendre leurs différences. Dans la deuxième propriété, nous ne contrôlons pas la première entrée, elle nous est donnée, contrairement à la troisième propriété où un attaquant peut choisir les deux entrées.
+```
 
 ## Authentification des messages
 
