@@ -46,11 +46,11 @@ Au premier abord, on pourrait croire que la deuxième et troisième propriété 
 
 ## Authentification des messages
 
-La fonction de hachage cryptographique trouve son utilité dans une grande variété d’applications de sécurité et de protocoles Internet, mais son utilisation principale concerne l’authentification des messages. C’est par conséquent cette application qui va être présentée.
+La fonction de hachage cryptographique trouve son utilité dans une grande variété d’applications de sécurité et de protocoles Internet, mais son utilisation principale résdide dans l’authentification des messages. C’est par conséquent cette application qui est présentée.
 
-Tout d’abord, l'authentification des messages est un mécanisme ou un service utilisé pour vérifier l'intégrité d'un message. Il garantit que les données reçues sont exactement telles qu'elles ont été envoyées, c'est-à-dire qu'il n'y a pas de modification, d'insertion, de suppression ou de relecture. Dans de nombreux cas, le mécanisme d'authentification doit garantir la validité de l'identité présumée de l'expéditeur. Lorsqu'une fonction de hachage est utilisée pour assurer l'authentification d'un message, la valeur de la fonction de hachage est souvent appelée condensé de message.
+Tout d’abord, l'authentification des messages est un mécanisme utilisé afin de vérifier l'intégrité d'un message. Ce procédé apporte la garantie que les données reçues sont exactement telles qu'elles ont été envoyées, c'est-à-dire qu'il n'y a pas de modification, d'insertion, de suppression ou de relecture. De manière générale, le mécanisme d'authentification doit confirmer la validité de l'identité présumée de l'expéditeur. Lorsqu'une fonction de hachage est utilisée pour assurer l'authentification d'un message, les valeurs obtenues de la fonction sont appelées condensés de message.
 
-D’une manière générale, l’utilisation d’une fonction de hachage pour vérifier l’intégrité fonctionne de la manière suivante : l'expéditeur calcule une valeur de hachage en fonction des bits du message et transmet à la fois la valeur de hachage et le message, le récepteur effectue le même calcul de hachage sur les bits du message et compare cette valeur avec la valeur de hachage reçue (fig. 9). En cas de non-concordance, le destinataire sait que le message (ou éventuellement la valeur de hachage) a été modifié.
+De façon simple et globale, l’utilisation d’une fonction de hachage pour vérifier l’intégrité fonctionne de la manière suivante : l'expéditeur calcule une valeur de hachage en fonction des bits du message et transmet à la fois la valeur de hachage et le message, le récepteur effectue le même calcul de hachage sur les bits du message et compare cette valeur avec la valeur de hachage reçue (fig. 9). Si le résulat obtenu ne concorde pas avec la valeur de hachage reçue, alors le destinataire sait que le message (ou éventuellement la valeur de hachage) a été modifié.
 
 ```{figure} figures/integrite1.png
 ---
@@ -58,17 +58,17 @@ width: 80%
 ---
 Utilisation d'une fonction de hachage pour vérifier l'intégrité des données. 
 ```
+Dans ce processus, il est important de savoir que la valeur de hachage doit être transmise de manière sécurisée. Il est nécessaire qu'elle soit protégée, sinon un attaquant aurait la possibilité de modifier le message ainsi que la valeur de hachage, ce qui permettrait de tromper le destinataire. Ce type d'attaque est illustré à la figure numéro 10. Dans cet exemple, Alice transmet des données et y joint une valeur de hachage. Dark intercepte le message, modifie des données et calcule une nouvelle valeur de hachage. Bob reçoit les données modifiées avec la nouvelle valeur de hachage calculée par Dark et ne détecte pas le changement. Dès lors, pour empêcher cette attaque, la valeur de hachage générée par Alice doit être protégée. 
 
-La valeur de hachage doit être transmise de manière sécurisée. En d'autres termes, la valeur de hachage doit être protégée de telle sorte que si un adversaire modifie ou remplace le message, il ne peut pas non plus modifier la valeur de hachage pour tromper le destinataire. Ce type d'attaque est illustré à la figure numéro 10. Dans cet exemple, Alice transmet un bloc de données et y joint une valeur de hachage. Dark intercepte le message, modifie ou remplace le bloc de données, calcule et joint une nouvelle valeur de hachage. Bob reçoit les données modifiées avec la nouvelle valeur de hachage et ne détecte pas le changement. Pour empêcher cette attaque, la valeur de hachage générée par Alice doit être protégée.
 
 ```{figure} figures/integrite2.png
 ---
 width: 90%
 ---
-Attaque contre une fonction de hachage. 
+Attaque contre une fonction de hachage lorsque la valeur de hachage n'est pas protégée. 
 ```
 
-Les figures suivantes illustrent de manière plus complète différentes façons dont une fonction de hachage peut être utilisée afin d’authentifier un message. Mais, tout d’abord, présentons la signification des lettres utilisées : 
+Les figures suivantes illustrent de manière plus complète différentes façons dont une fonction de hachage peut être utilisée afin d’authentifier un message, tout en sécurisant la valeur de hachage. Mais, tout d’abord, présentons la signification des lettres utilisées : 
 
 - M : message
 - H : hash function (fonction de hachage)
@@ -84,7 +84,7 @@ width: 90%
 Exemple d'utilisation d'une fonction de hachage. 
 ```
 
-Selon la figure ci-dessus, le message plus le code de hachage concaténé est chiffré à l'aide d'un chiffrement symétrique. Comme seuls A et B partagent la clé secrète, le message doit provenir de A et n'a pas été modifié. Le code de hachage fournit la structure ou la redondance nécessaire à l'authentification. Le chiffrement étant appliqué à l'ensemble du message et du code de hachage, la confidentialité est également assurée.
+Selon la figure ci-dessus, le message et le condensé sont chiffrés à l'aide d'un chiffrement symétrique. Comme seuls A et B partagent la clé secrète, le message doit provenir de A et n'a pas été modifié. La valeur de hachage permet de vérifier l'authenticité du message de la même façon précédemment décrite. De plus, le chiffrement étant appliqué à l'ensemble du message et du condensé, la confidentialité est également assurée.
 
 ```{figure} figures/hash2.png
 ---
@@ -93,7 +93,7 @@ width: 90%
 Exemple d'utilisation d'une fonction de hachage. 
 ```
 
-Seule la valeur de hachage est chiffrée, à l'aide d'un chiffrement symétrique. Cela réduit la charge de traitement pour les applications qui ne nécessitent pas de confidentialité.
+Dans cet exemples (fig. 12), seule la valeur de hachage est chiffrée, toujours à l'aide d'un chiffrement symétrique. Cela permet de réduire la charge de traitement pour les applications où la confidentialité n'est pas nécessaire.
 
 ```{figure} figures/hash3.png
 ---
@@ -102,7 +102,7 @@ width: 90%
 Exemple d'utilisation d'une fonction de hachage. 
 ```
 
-Il est possible d'utiliser une valeur de hachage sans chiffrement pour l'authentification des messages. La technique suppose que les deux parties communicantes partagent une valeur secrète commune S. A calcule la valeur de hachage sur la concaténation de M et S et ajoute la valeur de hachage résultante à M. Comme B possède S, il peut recalculer la valeur de hachage pour la vérifier. Comme la valeur secrète elle-même n'est pas envoyée, un adversaire ne peut pas modifier un message intercepté et ne peut pas générer un faux message.
+Il est également possible d'utiliser une valeur de hachage sans chiffrement pour l'authentification des messages. Cette technique suppose que les deux parties partagent une valeur secrète commune S (fig. 13). A calcule la valeur de hachage sur la concaténation de M et S et ajoute ensuite la valeur de hachage obtenue au messsage M. Comme B est aussi en possession de la valeur secrète S, il peut recalculer la valeur de hachage pour la vérifier. Comme la valeur secrète elle-même n'est pas envoyée, un attaquant qui modifierait le message ne parviendrait pas à calculer une valeur de hachage correcte, puisqu'il lui manquerait S.
 
 ```{figure} figures/hash4.png
 ---
@@ -111,4 +111,4 @@ width: 90%
 Exemple d'utilisation d'une fonction de hachage. 
 ```
 
-La confidentialité peut être ajoutée à l'approche de la méthode (c) en chiffrant l'ensemble du message plus le code de hachage.
+A la méthode précédente, le message n'était pas confidentiel. Afin d'ajouter la confidentialité, nous pouvons simplement chiffrer l'ensemble du message avec le code de hachage, comme l'illustre la figure ci-dessus.
