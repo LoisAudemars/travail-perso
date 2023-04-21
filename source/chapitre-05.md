@@ -26,15 +26,15 @@ Pour faciliter la compréhension, prenons un deuxième exemple : nous considéro
 
 Pour trouver le nombre d’éléments d’un groupe {math}`Z_N^*` lorsque {math}`n` n’est pas premier, on utilise la fonction **totient d’Euler** qui s'écrit {math}`φ(n)`. Cette fonction donne le nombre d'éléments co-premiers avec {math}`n`, qui correspond alors au nombre d'éléments dans {math}`Z_N^*`. Lorsque {math}`n` n'est qu'un produit de nombres premiers {math}`n=p1 × p2 ×...× pm`, le nombre d'éléments dans le groupe {math}`Z_N^*` est le suivant :
 
-$$
+```{math}
 φ(n)=(p_1 −1)×(p_2 −1)×...×(p_m −1) 
-$$
+```
 
 RSA ne prend en compte que les nombres {math}`n` qui sont le produit de deux grands nombres premiers, généralement notés {math}`n = pq`. Dès lors, selon la fonction totient d’Euler, le groupe {math}`Z_N^*` contiendra {math}`φ(n) = (p - 1)(q - 1)` éléments. En développant cette expression,
 
-$$
+```{math}
 φ(n) = (p - 1)(q - 1) = pq – p -q + 1,
-$$
+```
 
 nous obtenons la définition équivalente {math}`φ(n) = n - p - q + 1`, ou {math}`φ(n) = (n + 1) - (p + q)`, qui exprime plus intuitivement la valeur de {math}`φ(n)` par rapport à {math}`n`. En d'autres termes, tous les nombres compris entre {math}`1` et {math}`n - 1`, à l'exception de {math}`(p + q)`, appartiennent à {math}`Z_N^*` et sont des nombres acceptés pour les opérations de l'algorithme RSA.
 
@@ -43,9 +43,9 @@ nous obtenons la définition équivalente {math}`φ(n) = n - p - q + 1`, ou {mat
 Maintenant que les notions de bases ont été présentées, nous pouvons nous intéressés à la permutation de trappe RSA. La permutation de trappe RSA est l'algorithme de base du chiffrement et des signatures basés sur RSA. Étant donné un module {math}`n` et un nombre {math}`e`, appelé exposant public et qui est choisi « au hasard », la permutation de trappe RSA transforme un nombre {math}`x` de l'ensemble {math}`Z_N^*` en un nombre {math}`y = xe mod n`. Elle calcule donc la valeur égale à {math}`x` multiplié par lui-même {math}`e` fois modulo {math}`n`, puis renvoie le résultat. Lorsque nous utilisons la permutation à trappe RSA pour crypter, le module {math}`n` et l'exposant {math}`e` constituent la clé publique RSA.
 Pour récupérer {math}`x` à partir de {math}`y`, nous utilisons un autre nombre, que l'on {math}`d`, pour calculer ce qui suit :
 
-$$
+```{math}
 y^d mod n=(x^e)^d mod n=x^{ed} mod n=x.
-$$
+```
 
 Le nombre {math}`d` est la trappe qui nous permet de décrypter. Par conséquent, il fait partie de la clé privée et, contrairement à la clé publique, il doit toujours être gardé secret. Le nombre {math}`d` est également appelé exposant secret, tandis que {math}`e` est l’exposant public.
 Évidemment, {math}`d` n'est pas n'importe quel nombre ; c'est le nombre tel que {math}`e` multiplié par {math}`d` est équivalent à {math}`1`, et donc tel que {math}`x^{ed} mod n = x` pour tout {math}`x`. Nous verrons dans la prochaine section comment calculer {math}`d`.
@@ -265,9 +265,9 @@ Généralement, nous utilisons le cryptosystème RSA en combinaison avec un syst
 
 Le chiffrement RSA classique est l'expression décrivant le schéma de chiffrement RSA simpliste. Dans ce schéma, le texte en clair ne contient que le message que l'on souhaite chiffrer. Un désavantage du cryptage RSA classique est qu'il est déterministe : si l'on crypte deux fois le même texte en clair, on obtiendra deux fois le même texte crypté. C'est un premier problème, mais il y en a un autre plus important : si nous prenons deux cryptogrammes RSA classiques {math}`y_1 = x_1^e mod n` et {math}`y_2 = x_2^e mod n`, nous pouvons dériver le texte chiffré de {math}`x_1 × x_2` en multipliant ces deux textes chiffrés ensemble, comme ceci :
 
-$$
+```{math}
 y_1 × y_2 mod n= x_1^e × x_2^e mod n=(x_1 × x_2)^e mod n
-$$
+```
 
 Le résultat est {math}`(x_1 × x_2)^e mod n`, le texte chiffré du message {math}`x_1 × x_2 mod n`. Un attaquant pourrait donc créer un nouveau texte chiffré valide à partir de deux textes chiffrés RSA, ce qui lui permettrait de compromettre la sécurité du chiffrement en déduisant des informations sur le message d'origine. Nous disons que cette faiblesse rend le cryptage RSA des manuels **malléable**. (Bien entendu, si nous connaissons {math}`x_1` et {math}`x_2`, nous pouvons également calculer {math}`(x_1 × x_2)^e mod n`, mais si nous ne connaissons que {math}`y_1` et {math}`y_2`, nous ne devrions pas être en capable de multiplier les textes chiffrés et d'obtenir un texte chiffré à partir des textes clairs multipliés).
 
@@ -287,9 +287,9 @@ Pour une question d'efficacité, le chiffrement asymétrique est utilisé pour t
 
 Je rappelle que ce que nous appelons une signature RSA classique est la méthode qui signe un message, {math}`x`, en calculant directement {math}`y = x^d mod n`, où {math}`x` peut être n'importe quel nombre entre {math}`0` et {math}`n - 1`. Comme le chiffrement classique, la signature RSA classique n'est pas sûre face à plusieurs attaques. L'une d'entre elles consiste en une falsification triviale : en remarquant que {math}`0^d mod n=0`, {math}`1^d mod n=1` et {math}`(n-1)^d mod n = n-1`, quelle que soit la valeur de la clé privée {math}`d`, un attaquant peut falsifier des signatures de {math}`0`, {math}`1` ou {math}`n-1` sans connaître {math}`d`. Cependant, il existe une autre attaque plus inquiétante : l'attaque par aveuglement. Par exemple, supposons que nous souhaitons obtenir la signature d'un tiers sur un message incriminant, {math}`M`, dont nous savons qu'il ne le signerait jamais en connaissance de cause. Pour lancer cette attaque, nous pourrions pour commencer trouver une valeur, {math}`R`, telle que {math}`R^eM  mod n` est un message que notre victime serait d'accord de signer. Nous la convaincrons donc de signer ce message et de nous montrer sa signature, qui est égale à {math}`S = (R^eM)^d mod n`. Etant donné cette signature, nous pouvons désormais dériver la signature de {math}`M`, à savoir {math}`M^d`, à l'aide de quelques calculs : comme {math}`S` peut être écrit sous la forme {math}`(R^eM)^d = R^{ed}M^d`, et comme {math}`R^{ed} = R ` (par définition), nous avons {math}`S = (R^eM)^d = RM^d`. Pour obtenir {math}`M^d`, il suffit de diviser {math}`S` par {math}`R`, comme suit, pour obtenir la signature :
 
-$$
+```{math}
 S/R = RM^d/R = M^d
-$$
+```
 
 Cette attaque est puissante et rapelle qu'il est important de toujours faire attention à ce que l'on signe.
 
