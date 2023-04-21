@@ -6,7 +6,7 @@ RSA est avant tout une astuce arithmétique. Ce cryptosystème fonctionne en cr�
 
 ```{figure} figures/fonction_trappe.png
 ---
-width: 70%
+width: 40%
 align: center
 ---
 Représentation d'une fonction à trappe. Il est facile d'évaluer la fonction mais son inversion est complexe sauf si la clé t est connue.
