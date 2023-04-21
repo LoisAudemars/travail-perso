@@ -4,8 +4,8 @@
     contain the root `toctree` directive.
     
 
-Le cryptosystème RSA
-====================
+Cryptographie et cryptosystème RSA
+==================================
 
 ..  toctree::
     :maxdepth: 2
