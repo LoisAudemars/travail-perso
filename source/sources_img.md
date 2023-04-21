@@ -15,5 +15,5 @@ Figure 12 : Cryptography and Network Security, Principles and Practice, William 
 Figure 13 : Cryptography and Network Security, Principles and Practice, William Stallings, p. 343.
 Figure 14 : Cryptography and Network Security, Principles and Practice, William Stallings, p. 343.
 Figure 15, Wikiwand : <https://www.wikiwand.com/en/Digital_signature>.
-Figure 16 : ATTENTION A REFAIRE
+Figure 16 : Réalisé par moi-même
 Figure 17 Wikipedia : <https://fr.wikipedia.org/wiki/Fonction_à_trappe>.
