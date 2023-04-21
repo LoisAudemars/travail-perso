@@ -14,9 +14,9 @@ Usages des la cryptographie
 ```
 # Le chiffrement
 
-Le chiffrement est une sous-discipline de la cryptographie faisant appel à une clé. C’est un procédé grâce auquel on peut rendre la compréhension d'un document impossible à toute personne qui n'a pas la clé de (dé)chiffrement. Celle-ci peut être un code ou un mot de passe, elle est le paramètre décisif du chiffrement. De nos jours, elle est générée automatiquement dans les processus informatiques afin d'éliminer le facteur humain et la menace d'utiliser un mot de passe qui n'est pas sûr.
+Le chiffrement est une sous-discipline de la cryptographie faisant appel à une clé. C’est un procédé grâce auquel on peut rendre la compréhension d'un document impossible à toute personne qui n'a pas la clé de (dé)chiffrement. La clé peut être un code ou un mot de passe, elle est le paramètre décisif du chiffrement. De nos jours, elle est générée automatiquement dans les processus informatiques afin d'éliminer le facteur humain et la menace d'utiliser un mot de passe qui n'est pas sûr.
 Les systèmes de chiffrement sont principalement symétriques ou asymétriques. Un système est dit symétrique lorsqu’il utilise la même clé pour chiffrer et déchiffrer, asymétrique lorsqu’il utilise deux clés distinctes.
-Ce sont les tâches à accomplir qui déterminent l’utilisation d’un système symétrique ou asymétrique. La cryptographie asymétrique présente deux intérêts majeurs : elle permet la signature numérique et supprime le problème de transmission de la clé. Cependant, elle a le désavantage d’avoir des temps de calcul nettement plus long que la cryptographie symétrique. 
+Ce sont les tâches à accomplir qui déterminent l’utilisation d’un système symétrique ou asymétrique. La cryptographie asymétrique présente deux intérêts majeurs : elle permet la signature numérique et supprime le problème de transmission de la clé. Cependant, elle a le désavantage d’avoir des temps de calcul nettement plus longs que la cryptographie symétrique. 
  
 ## Chiffrement symétrique
 Comme mentionné plus haut, la cryptographie symétrique se fonde sur une même clé pour chiffrer et déchiffrer le message (Fig. 3.1). L'un des problèmes de cette technique est que la clé, qui doit rester totalement confidentielle, doit être transmise au correspondant de façon sûre. Cette opération peut s'avérer difficile, surtout avec un grand nombre de correspondants car il faut autant de clés que de correspondants.
@@ -31,8 +31,6 @@ Schéma du chiffrement symétrique : la même clé est utilisée pour le chiffre
 Voici quelques algorithmes de chiffrement symétrique très utilisés : 
 
 - Chiffre de Vernam (le seul offrant une sécurité théorique absolue, à condition que la clé ait au moins la même longueur que le message à chiffrer, qu'elle ne soit utilisée qu'une seule fois et qu'elle soit totalement aléatoire)
-
-- DES
 
 - AES
 
@@ -51,7 +49,7 @@ L’inconvénient principal de ces algorithmes par rapport aux algorithmes à cl
 
 ### Utilisations majeures
 
-Nous avons premièrement la confidentialité des messages reçus : l’individu souhaitant recevoir des messages génère un couple de clés privée/publique. La clé privée doit rester secrète, il ne la transmet à personne, alors que la clé publique est transmissible sans restriction. Lorsque qu'un individu veut lui envoyer un message de manière confidentielle, il utilise la clé publique afin de chiffrer celui-ci (fig. 3.2). Le message chiffré obtenu ne peut être déchiffré que par la clé privée. Par conséquent, il peut être communiqué publiquement, la confidentialité du message reste garantie. Le destinataire est le seul à pouvoir déchiffrer le message et reconstituer l’original puisqu’il est le seul à connaître la clé privée.
+Nous avons premièrement la confidentialité des messages reçus : l’individu souhaitant recevoir des messages génère un couple de clés privée/publique. La clé privée doit rester secrète, il ne doit la transmettre à personne, alors que la clé publique est transmissible sans restriction. Lorsque qu'un individu veut envoyer un message de manière confidentielle à un destinataire, il utilise la clé publique afin de chiffrer celui-ci (fig. 3.2). Le message chiffré obtenu ne peut être déchiffré que par la clé privée correspondante. Par conséquent, il peut être communiqué publiquement, la confidentialité du message reste garantie. Le destinataire est le seul à pouvoir déchiffrer le message et reconstituer l’original puisqu’il est le seul à connaître la clé privée.
 
 ```{figure} figures/Chiffrement_asymetrique.png
 ---
@@ -74,7 +72,7 @@ Selon la figure 3.3, Alice souhaite recevoir des messages secrets de Bob. Elle t
 La seconde utilisation de la cryptographie asymétrique concerne l'authentification de l’expéditeur d’un message. L'expéditeur utilise sa clé privée pour chiffrer un message que n'importe qui peut déchiffrer avec la clé publique de l'expéditeur, ce qui garantit que le message a été chiffré par l'expéditeur, qui est le seul à posséder la clé privée. Ce mécanisme correspond à la **signature numérique**, procédé dont nous parlerons plus tard.
 
 ### Nature des clés
-La cryptographie asymétrique se fonde sur l’existence de fonctions à sens unique et à trappe secrète. Une fonction à sens unique est une fonction qui peut être calculée assez facilement, mais qui est difficile à inversé. En d'autres termes, il est difficile de retrouver l’antécédent d’une image. Ce type de fonctions est également utilisé dans les fonctions de hachage.
+La cryptographie asymétrique se fonde sur l’existence de fonctions à sens unique et à trappe secrète. Une fonction à sens unique est une fonction qui peut être calculée assez facilement, mais qui est difficile à inverser. En d'autres termes, il est difficile de retrouver l’antécédent d’une image. Ce type de fonctions est également utilisé dans les fonctions de hachage.
 C'est grâce à la trappe secrète que la personne ayant conçu la fonction à sens unique peut retrouver facilement l'antécédent d'une image. La trappe secrète ne doit pas être révélée, elle constitue par conséquent la clé privée, tandis que la fonction à sens unique peut être transmise et correspond alors à la clé publique.
 
 # Les fonctions de hachage

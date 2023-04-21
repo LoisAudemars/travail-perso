@@ -1,5 +1,3 @@
-.. _conclusion.rst:
-
 Conclusion
 ##########
 
